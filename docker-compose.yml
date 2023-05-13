@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend_image
+    container_name: frontend
+    tty: true
+    volumes:
+      - ./frontend/app:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: backend_image
+    container_name: backend
+    tty: true
+    volumes:
+      - ./backend/api:/api
+    ports:
+      - 8000:8000
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - 6379:6379
